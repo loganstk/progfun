@@ -1,7 +1,4 @@
 object Math {
-
-  def abs(x: Double) = if (x < 0) -x else x
-
   /**
     * Acts the same as x && y.
     */
@@ -11,6 +8,11 @@ object Math {
     * Acts the same as x || y;
     */
   def or(x: Boolean, y: => Boolean) = if (x) true else y
+
+  /**
+    * Return absolute value of number x.
+    */
+  def abs(x: Double) = if (x < 0) -x else x
 
   /**
     * Calculates the square root of x.
@@ -29,24 +31,17 @@ object Math {
   }
 
   /**
-    * Calculates the factorial of number n.
-   */
-  def factorial(n: Int) : Int =
-    if (n == 0) 1 else n * factorial(n-1)
-
-  /**
     * Tail recursive factorial.
-    */
-  def factorial(n: Int, acc: Int) : Int =
-    if (n == 0) acc else factorial(n - 1, n * acc)
+   */
+  def factorial(n: Int) = {
+    def loop(n: Int, acc: Int) : Int =
+      if (n == 0) acc else loop(n - 1, acc * n)
+    loop(n, 1)
+  }
 
   /**
     * Greatest common divisor.
     */
   def gcd(a: Int, b: Int) : Int =
     if (b == 0) a else gcd(b, a % b)
-
-
-  factorial(4)
-  factorial(4, 1)
 }
