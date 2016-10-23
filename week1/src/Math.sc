@@ -42,6 +42,6 @@ object Week1 {
   /**
     * Returns greatest common divisor of a and b.
     */
-  def gcd(a: Int, b: Int) : Int =
+  def gcd(a: Int, b: Int): Int =
     if (b == 0) a else gcd(b, a % b)
 }
