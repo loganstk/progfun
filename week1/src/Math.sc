@@ -1,4 +1,4 @@
-object Math {
+object Week1 {
   /**
     * Acts the same as x && y.
     */
@@ -10,7 +10,7 @@ object Math {
   def or(x: Boolean, y: => Boolean) = if (x) true else y
 
   /**
-    * Return absolute value of number x.
+    * Returns the absolute value of number x.
     */
   def abs(x: Double) = if (x < 0) -x else x
 
@@ -31,7 +31,7 @@ object Math {
   }
 
   /**
-    * Tail recursive factorial.
+    * Tail recursive factorial calculation.
    */
   def factorial(n: Int) = {
     def loop(n: Int, acc: Int) : Int =
@@ -40,7 +40,7 @@ object Math {
   }
 
   /**
-    * Greatest common divisor.
+    * Returns greatest common divisor of a and b.
     */
   def gcd(a: Int, b: Int) : Int =
     if (b == 0) a else gcd(b, a % b)
