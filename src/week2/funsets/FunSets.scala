@@ -1,5 +1,4 @@
-package funsets
-
+package week2.funsets
 
 /**
  * 2. Purely Functional Sets.

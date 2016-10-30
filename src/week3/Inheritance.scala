@@ -1,3 +1,5 @@
+package week3
+
 abstract class Base {
   def foo = 1
   def bar: Int
