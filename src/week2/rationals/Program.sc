@@ -1,4 +1,4 @@
-package week2.rationals
+import week2.rationals.Rational
 
 object Program {
   val x = new Rational(1, 2)
