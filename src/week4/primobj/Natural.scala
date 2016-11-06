@@ -13,7 +13,7 @@ abstract class Natural {
 
   def -(that: Natural): Natural
 }
-
+1
 object Zero extends Natural {
   override def isZero: scala.Boolean = true
 
