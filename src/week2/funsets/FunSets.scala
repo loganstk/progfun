@@ -25,24 +25,24 @@ object FunSets {
    * Returns the union of the two given sets,
    * the sets of all elements that are in either `s` or `t`.
    */
-    def union(s: Set, t: Set): Set = e => s(e) | t(e)
+    def union(s: Set, t: Set): Set = e => s(e) || t(e)
   
   /**
    * Returns the intersection of the two given sets,
    * the set of all elements that are both in `s` and `t`.
    */
-    def intersect(s: Set, t: Set): Set = e => s(e) & t(e)
+    def intersect(s: Set, t: Set): Set = e => s(e) && t(e)
   
   /**
    * Returns the difference of the two given sets,
    * the set of all elements of `s` that are not in `t`.
    */
-    def diff(s: Set, t: Set): Set = e => s(e) & !t(e)
+    def diff(s: Set, t: Set): Set = e => s(e) && !t(e)
   
   /**
    * Returns the subset of `s` for which `p` holds.
    */
-    def filter(s: Set, p: Int => Boolean): Set = e => s(e) & p(e)
+    def filter(s: Set, p: Int => Boolean): Set = e => s(e) && p(e)
   
 
   /**
