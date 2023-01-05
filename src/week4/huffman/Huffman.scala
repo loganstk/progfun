@@ -157,12 +157,13 @@ trait Huffman extends HuffmanInterface {
 
     def decodeIter(currentTree: CodeTree, bits: List[Bit], message: List[Char]): List[Char] = {
       currentTree match {
-        case l: Leaf => if (bits.isEmpty) message.appended(l.char) else
-          decodeIter(tree, bits, message.appended(l.char))
-        case f: Fork => if (bits.isEmpty) message else decodeIter(
-          chooseBranch(bits.head, f),
-          bits.tail,
-          message)
+        case l: Leaf =>
+          val currMessage = l.char :: message
+          if (bits.isEmpty) currMessage.reverse
+          else decodeIter(tree, bits, currMessage)
+        case f: Fork =>
+          if (bits.isEmpty) message.reverse
+          else decodeIter(chooseBranch(bits.head, f), bits.tail, message)
       }
     }
 
@@ -197,13 +198,13 @@ trait Huffman extends HuffmanInterface {
   def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
     def encodeSymbol(tree: CodeTree, bits: List[Bit])(c: Char): List[Bit] = tree match {
       case Fork(left, right, _, _) =>
-        if (chars(left).contains(c)) encodeSymbol(left, bits.appended(0))(c)
-        else if (chars(right).contains(c)) encodeSymbol(right, bits.appended(1))(c)
+        if (chars(left).contains(c)) encodeSymbol(left, 0 :: bits)(c)
+        else if (chars(right).contains(c)) encodeSymbol(right, 1 :: bits)(c)
         else throw new NoSuchElementException(s"Unknown symbol: $c")
-      case _: Leaf => bits
+      case _: Leaf => bits.reverse
     }
 
-    text.flatMap(encodeSymbol(tree, Nil))
+    text flatMap encodeSymbol(tree, Nil)
   }
 
   // Part 4b: Encoding using code table
@@ -228,10 +229,10 @@ trait Huffman extends HuffmanInterface {
    */
   def convert(tree: CodeTree): CodeTable = {
     def convertRec(prefix: List[Bit], tree: CodeTree): CodeTable = tree match {
-      case l: Leaf => List((l.char, prefix))
+      case l: Leaf => List((l.char, prefix.reverse))
       case f: Fork => mergeCodeTables(
-        convertRec(prefix.appended(0), f.left),
-        convertRec(prefix.appended(1), f.right)
+        convertRec(0 :: prefix, f.left),
+        convertRec(1 :: prefix, f.right)
       )
     }
 
@@ -254,7 +255,7 @@ trait Huffman extends HuffmanInterface {
   def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = {
     val table = convert(tree)
 
-    text.flatMap(codeBits(table))
+    text flatMap codeBits(table)
   }
 }
 
